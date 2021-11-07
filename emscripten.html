@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://alexclifton.co.uk/style.css">
+    <title>Alex Clifton</title>
+  </head>
+  
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+      <a href="/" class="navbar-brand">
+        Alex Clifton
+      </a>
+    </nav>
+
+    <main role="main" class="container">
+      <div class="content">
+        <h1>Tilemap</h1>
+        <!-- Canvas and config for Emscripten-->
+        <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+        <script type='text/javascript'>
+            var Module = {
+                canvas: (function() { return document.getElementById('canvas'); })()
+            };
+        </script>
+
+        <p>Use WASD or arrow keys to move around, and space to place a box. A worker will come and pick up the box.</p>
+        <h3>Task system</h3>
+        <p>Many management simulations games have a mechanic where workers carry out tasks, for example the contruction workers in Prison Architect, and I wanted to implement something like this.</p>
+        <p>
+          There is a task system which workers can register with, and that tasks can be added to.
+          When a task is created, it will immediately be assigned to a worker if one is available, otherwise it will be added to a queue.
+          Likewise, workers will be given waiting tasks when they register, or added to a queue if there are no current tasks.
+        </p>
+        <p>Using queues for both the workers and tasks is a fairly basic approach and I would like to improve this to work out which task and worker are closest to each other.</p>
+        <p>The workers use Breadth-first search to find their target. Something like A* would be more efficient for this, but it doesn't affect performance in this demo.</p>
+        <h3>Implementation</h3>
+        <p>The demo is made in C++ using SDL for graphics. This is the first time I've used Emscripten to compile C++ for the web, and I also managed to port it to Android.</p>
+        <p>The code can be found <a href="https://github.com/alexclifton4/tilemap-agents">on GitHub</a>.</p>
+        
+        {{{ SCRIPT }}}
+        
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
