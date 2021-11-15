@@ -6,8 +6,10 @@
 std::deque<std::unique_ptr<Task>> TaskSystem::taskQueue;
 std::deque<Worker*> TaskSystem::workerQueue;
 
-Task::Task(SDL_Point l, Entity* r) {
-    location = l;
+Task::Task(SDL_Point s, SDL_Point e, double d, Entity* r) {
+    start = s;
+    end = e;
+    timeRemaining = duration = d;
     requester = r;
 }
 

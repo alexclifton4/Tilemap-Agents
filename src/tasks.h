@@ -9,9 +9,12 @@ class Entity;
 
 struct Task {
 public:
-    Task(SDL_Point l, Entity* r);
+    Task(SDL_Point start, SDL_Point end, double duration, Entity* requester);
     ~Task();
-    SDL_Point location;
+    SDL_Point start;
+    SDL_Point end;
+    double duration;
+    double timeRemaining;
     Entity* requester;
 };
 

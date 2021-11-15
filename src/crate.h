@@ -8,4 +8,6 @@ public:
     Crate(SDL_Point position);
 
     void update(bool* shouldDestroy);
+private:
+    SDL_Point targetPos;
 };

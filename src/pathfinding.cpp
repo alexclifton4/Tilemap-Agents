@@ -6,6 +6,14 @@ using Map = std::vector<std::vector<Tile>>*;
 
 std::deque<SDL_Point> Pathfinding::findPath(SDL_Point start, SDL_Point target) {
     std::deque<SDL_Point> path;
+
+    // Return a single point if start = target
+    if (start.x == target.x && start.y == target.y) {
+        path.push_front({target.x, target.y});
+
+        return path;
+    }
+
     std::queue<SDL_Point> queue;
     SDL_Point nextPoint;
     bool pathPossible = true;

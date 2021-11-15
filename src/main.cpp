@@ -187,9 +187,9 @@ int main(int argc, char* args[]) {
 		player = std::make_unique<Player>();
 
 		// Create some workers
-		g_entities.push_back(std::make_unique<Worker>((SDL_Point){3, 3}));
-		g_entities.push_back(std::make_unique<Worker>((SDL_Point){4, 4}));
-		g_entities.push_back(std::make_unique<Worker>((SDL_Point){5, 5}));
+		g_entities.push_back(std::make_unique<Worker>((SDL_Point){6, 4}));
+		g_entities.push_back(std::make_unique<Worker>((SDL_Point){7, 5}));
+		g_entities.push_back(std::make_unique<Worker>((SDL_Point){8, 6}));
 
 		// Run the main loop
 		now = SDL_GetPerformanceCounter();

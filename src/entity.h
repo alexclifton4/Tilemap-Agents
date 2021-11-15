@@ -9,15 +9,15 @@ public:
     ~Entity() {}
 
     virtual void update(bool* shouldDestroy) = 0;
-    void render(SDL_Texture* tiles);
+    virtual void render(SDL_Texture* tiles);
 
+    SDL_Rect src = {0, 0, 0, 0};
+    bool carried = false;
     bool taskComplete = false;
 
 protected:
     SDL_FPoint position;
     double angle = 0;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
-    SDL_Rect src = {0, 0, 0, 0};
     SDL_Rect dest = {0, 0, 0, 0};
-    bool errorState = false;
 };
