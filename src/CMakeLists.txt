@@ -7,4 +7,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 	worker.cpp
 	entity.cpp
 	pathfinding.cpp
+	events.cpp
 )

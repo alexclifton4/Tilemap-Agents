@@ -5,6 +5,7 @@
 #include <time.h>
 #include <memory>
 
+#include "events.h"
 #include "tilemap.h"
 #include "player.h"
 #include "crate.h"
@@ -23,8 +24,6 @@ SDL_Renderer* g_renderer = NULL;
 SDL_FPoint g_camera = {0, 0};
 std::unique_ptr<Tilemap> g_map;
 std::vector<std::unique_ptr<Entity>> g_entities;
-const Uint8* g_keyState;
-Uint8 g_keyDown[512];
 double g_deltaTime = 0;
 
 SDL_Texture* tiles = NULL;
@@ -41,6 +40,14 @@ bool initSDL() {
 		printf("Unable to initialise SDL: %s\n", SDL_GetError());
 		return 0;
 	}
+
+#ifdef __ANDROID__
+	// Get the screen size when on Android
+	SDL_DisplayMode dm;
+	SDL_GetCurrentDisplayMode(0, &dm);
+	g_window_width = dm.w;
+	g_window_height = dm.h;
+#endif
 
 	// Create the window and renderer
 	g_window = SDL_CreateWindow("Tilemap", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, g_window_width, g_window_height, SDL_WINDOW_RESIZABLE);
@@ -93,38 +100,7 @@ void mainLoop() {
 	now = SDL_GetPerformanceCounter();
 	g_deltaTime = (double)((now - then) / (double)SDL_GetPerformanceFrequency());
 
-	// Reset keys down
-	for (int i = 0; i < 512; i++) {
-		g_keyDown[i] = 0;
-	}
-
-	// Check events
-	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
-		switch (event.type) {
-			case SDL_QUIT:
-			playing = false;
-			break;
-
-			case SDL_KEYDOWN:
-			// Ignore repeated keys
-			if (event.key.repeat == 0) {
-				// Record which key was pressed
-				g_keyDown[event.key.keysym.scancode] = 1;
-			}
-			break;
-
-			case SDL_WINDOWEVENT:
-			if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-				g_window_width = event.window.data1;
-				g_window_height = event.window.data2;
-			}
-			break;
-		}
-	}
-
-	// Update key state
-	g_keyState = SDL_GetKeyboardState(NULL);
+	Events::updateInput(&playing);
 
 	// Update the player
 	player->update();

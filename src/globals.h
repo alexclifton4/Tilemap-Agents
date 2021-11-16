@@ -13,6 +13,4 @@ extern SDL_Renderer* g_renderer;
 extern SDL_FPoint g_camera;
 extern std::unique_ptr<Tilemap> g_map;
 extern std::vector<std::unique_ptr<Entity>> g_entities;
-extern const Uint8* g_keyState;
-extern Uint8 g_keyDown[];
 extern double g_deltaTime;

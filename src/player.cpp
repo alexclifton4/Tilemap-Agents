@@ -4,35 +4,15 @@
 #include "tilemap.h"
 #include "crate.h"
 #include "tasks.h"
+#include "events.h"
 
 Player::Player() {
     position = Tilemap::tile2world({1, 1});
 }
 
 void Player::update() {
-    SDL_FPoint movement = {0, 0};
-
-    // See if arrow keys are pressed
-    // Not using elseif - therefore if e.g. up and down pressed, they cancel
-    if (g_keyState[SDL_SCANCODE_UP] || g_keyState[SDL_SCANCODE_W]) {
-        movement.y -= 1;
-    }
-    if (g_keyState[SDL_SCANCODE_DOWN] || g_keyState[SDL_SCANCODE_S]) {
-        movement.y += 1;
-    }
-    if (g_keyState[SDL_SCANCODE_LEFT] || g_keyState[SDL_SCANCODE_A]) {
-        movement.x -= 1;
-    }
-    if (g_keyState[SDL_SCANCODE_RIGHT] || g_keyState[SDL_SCANCODE_D]) {
-        movement.x += 1;
-    }
-
-    // Normalise the movement vector - if moving diagonally, the speed will be more than 1
-    float mag = sqrt(movement.x * movement.x + movement.y * movement.y);
-    if (mag != 0 && mag != 1) {
-        movement.x = movement.x / mag;
-        movement.y = movement.y / mag;
-    }
+    // Calculate player movement
+    SDL_FPoint movement = Events::playerMovement;
 
     // Multiply by deltatime and speed
     movement.x *= g_deltaTime * speed;
@@ -51,7 +31,7 @@ void Player::update() {
     }
 
     // Check if a box should be placed
-    if (g_keyDown[SDL_SCANCODE_SPACE]) {
+    if (Events::placeBox) {
         SDL_Point cratePosition = Tilemap::world2tile(position);
         g_entities.push_back(std::make_unique<Crate>(cratePosition));
     }
