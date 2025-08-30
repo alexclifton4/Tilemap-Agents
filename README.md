@@ -11,4 +11,4 @@ The workers use Breadth-first search to find their target. Something like A* wou
 ## Implementation
 The demo is made in C++ using SDL for graphics. This is the first time I've used Emscripten to compile C++ for the web, and I also managed to port it to Android.
 
-The demo can be found here: [https://games.alexclifton.co.uk](https://games.alexclifton.co.uk).
+The demo can be found here: [https://alexclifton.co.uk/games](https://alexclifton.co.uk/games).
